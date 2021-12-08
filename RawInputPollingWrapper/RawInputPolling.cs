@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using DXNET.Multimedia;
 using DXNET.RawInput;
@@ -8,6 +9,11 @@ namespace RawInputPollingWrapper
 {
     public class RawInputPolling
     {
+        private HashSet<uint> keysDown = new HashSet<uint>();
+        private int mouseX=0;
+        private int mouseY=0;
+        private int wheelDelta=0;
+        private int mouseButtonPressed = 0;
         RawInputPolling()
         {
             // setup the device
@@ -30,12 +36,30 @@ namespace RawInputPollingWrapper
 
         private void DeviceOnKeyboardInput(object? sender, KeyboardInputEventArgs e)
         {
-            throw new NotImplementedException();
+            if (e.State == KeyState.KeyDown)
+            {
+                keysDown.Add((uint)e.Key);
+            }
+            else if (e.State == KeyState.KeyUp)
+            {
+                keysDown.Remove((uint) e.Key);
+            }
         }
 
         private void DeviceOnMouseInput(object? sender, MouseInputEventArgs e)
         {
-            throw new NotImplementedException();
+            if (e.Mode == MouseMode.MoveAbsolute)
+            {
+                mouseX = e.X;
+                mouseY = e.Y;
+            }
+            else
+            {
+                mouseX += e.X;
+                mouseY += e.Y;
+            }
+            wheelDelta += e.WheelDelta;
+            mouseButtonPressed = e.Buttons;
         }
     }
 }

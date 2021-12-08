@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using DXNET.Multimedia;
 using DXNET.RawInput;
@@ -14,6 +15,34 @@ namespace RawInputPollingWrapper
         private int mouseY=0;
         private int wheelDelta=0;
         private int mouseButtonPressed = 0;
+
+        public int MouseX
+        {
+            get => mouseX;
+        }
+        
+        public int MouseY
+        {
+            get => mouseY;
+            
+        }
+
+        public int MouseWheel
+        {
+            get => wheelDelta;
+        }
+        
+        public int MouseButtons
+        {
+            get => mouseButtonPressed;
+
+        }
+
+        public uint[] KeysPressed
+        {
+            get => keysDown.ToArray();
+        }
+
         RawInputPolling()
         {
             // setup the device
@@ -61,5 +90,7 @@ namespace RawInputPollingWrapper
             wheelDelta += e.WheelDelta;
             mouseButtonPressed = e.Buttons;
         }
+        
+        public
     }
 }

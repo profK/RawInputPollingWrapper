@@ -91,6 +91,6 @@ namespace RawInputPollingWrapper
             mouseButtonPressed = e.Buttons;
         }
         
-        public
+      
     }
 }
